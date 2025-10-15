@@ -1,26 +1,20 @@
-# Homebrew Formula for md2pdf
-# Documentation: https://docs.brew.sh/Formula-Cookbook
-
 class Md2pdf < Formula
   desc "Convert Markdown files with Mermaid diagrams to PDF"
   homepage "https://github.com/Cpicon/md2pdf"
   head "https://github.com/Cpicon/md2pdf.git", branch: "main"
 
-  # Dependencies
-  depends_on "python@3"
   depends_on "node"
+  depends_on "python@3"
 
   def install
-    # Install the binary
     bin.install "bin/md2pdf"
   end
 
   def post_install
-    # Install npm dependencies after Homebrew installation
     ohai "Installing npm dependencies..."
 
-    system "npm", "install", "-g", "md-to-pdf@5.2.4" unless which("md-to-pdf")
-    system "npm", "install", "-g", "@mermaid-js/mermaid-cli@11.9.0" unless which("mmdc")
+    system "npm", "install", *std_npm_args(global: true), "md-to-pdf@5.2.4" unless which("md-to-pdf")
+    system "npm", "install", *std_npm_args(global: true), "@mermaid-js/mermaid-cli@11.9.0" unless which("mmdc")
   end
 
   def caveats
